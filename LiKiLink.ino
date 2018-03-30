@@ -1,3 +1,8 @@
+// LiKiLink WIFI Bridge for LipoKiller2
+// By: Ulf Karlsson <ulk@ulwur.net>
+// Version: 0.1 2018-03-30
+
+
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
