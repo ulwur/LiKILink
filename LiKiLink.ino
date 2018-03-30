@@ -1,7 +1,8 @@
 // LiKiLink WIFI Bridge for LipoKiller2
 // By: Ulf Karlsson <ulk@ulwur.net>
 // Version: 0.1 2018-03-30
-
+// This software is released under the GPL. 
+// Board: Wemos D1 R2 Mini
 
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
 #include <DNSServer.h>
