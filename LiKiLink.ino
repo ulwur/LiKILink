@@ -25,6 +25,7 @@ String MsgCel3;
 String MsgCel4;
 String MsgCurr;
 String MsgLoad;
+String MsgmAhs;
 
 String ValTime;
 String ValCel1;
@@ -33,6 +34,7 @@ String ValCel3;
 String ValCel4;
 String ValCurr;
 String ValLoad;
+String ValmAhs;
 
 char ar_ValTime[10];
 char ar_ValCel1[10];
@@ -41,6 +43,7 @@ char ar_ValCel3[10];
 char ar_ValCel4[10];
 char ar_ValCurr[10];
 char ar_ValLoad[10];
+char ar_ValmAhs[10];
 
 //for LED status
 Ticker ticker;
@@ -164,7 +167,8 @@ void loop() {
     recvWithStartEndMarkers();
 
   if (newData == true) {
- 
+
+  // Transmit to telnet clients
 	for (i = 0; i < MAX_SRV_CLIENTS; i++) {
       if (serverClients[i] && serverClients[i].connected()) {
         serverClients[i].write(receivedChars, numChars);
@@ -172,6 +176,7 @@ void loop() {
         delay(1);
       }
     }
+    
     if(StartsWith(receivedChars, "Dchg")) {
 		MsgTime = GetStringPartAtSpecificIndex(receivedChars, ',' , 0);
 		MsgCel1 = GetStringPartAtSpecificIndex(receivedChars, ',' , 1);
@@ -180,6 +185,7 @@ void loop() {
 		MsgCel4 = GetStringPartAtSpecificIndex(receivedChars, ',' , 4);
 		MsgCurr = GetStringPartAtSpecificIndex(receivedChars, ',' , 5);
 		MsgLoad = GetStringPartAtSpecificIndex(receivedChars, ',' , 6); 
+    MsgmAhs = GetStringPartAtSpecificIndex(receivedChars, ',' , 7); 
 		showParsedData();
 
 		ValTime = GetStringPartAtSpecificIndex(MsgTime, ':' , 1);
@@ -189,6 +195,7 @@ void loop() {
 		ValCel4 = GetStringPartAtSpecificIndex(MsgCel4, ':' , 1);
 		ValCurr = GetStringPartAtSpecificIndex(MsgCurr, ':' , 1);
 		ValLoad = GetStringPartAtSpecificIndex(MsgLoad, ':' , 1); 
+    ValmAhs = GetStringPartAtSpecificIndex(MsgmAhs, ':' , 1); 
 		showParsedData2();
 		
 		//mqtta
@@ -199,6 +206,7 @@ void loop() {
     ValCel4.toCharArray( ar_ValCel4 ,10);
     ValCurr.toCharArray( ar_ValCurr ,10);
     ValLoad.toCharArray( ar_ValLoad ,10);
+    ValmAhs.toCharArray( ar_ValmAhs ,10);
  
     client.publish("LiKiLink/time", ar_ValTime);
     client.publish("LiKiLink/cell1", ar_ValCel1);
@@ -207,6 +215,7 @@ void loop() {
     client.publish("LiKiLink/cell4", ar_ValCel4);
     client.publish("LiKiLink/curr", ar_ValCurr);
     client.publish("LiKiLink/load", ar_ValLoad);
+    client.publish("LiKiLink/mAhs", ar_ValmAhs);
 
     }
   newData = false;
@@ -306,6 +315,7 @@ void showParsedData() {
     Serial.println(MsgCel4);
     Serial.println(MsgCurr);
     Serial.println(MsgLoad);
+    Serial.println(MsgmAhs);
 }
 
 void showParsedData2() {
@@ -317,6 +327,7 @@ void showParsedData2() {
     Serial.println(ValCel4);
     Serial.println(ValCurr);
     Serial.println(ValLoad);
+    Serial.println(ValmAhs);
     Serial.println();
 }
 
